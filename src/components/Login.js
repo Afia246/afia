@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/login', formData)
-      .then(response => {
-        console.log('Login response:', response.data);
-        // Assuming your backend returns a token or session upon successful login
-        localStorage.setItem('token', response.data.token); // Store token in localStorage
-        window.location.href = '/home'; // Redirect to home page after successful login
-      })
-      .catch(error => {
-        console.error('Login error:', error);
+    try {
+      const response = await axios.post('http://localhost:5000/api/login', formData);
+      console.log('Login response:', response.data);
+      localStorage.setItem('token', response.data.token);
+      navigate('/');
+    } catch (error) {
+      console.error('Login error:', error); // Log the full error object for detailed debugging
+      if (error.response && error.response.status === 401) {
+        setMessage('Unauthorized: Incorrect username or password');
+      } else {
         setMessage('Login failed. Please try again.');
-      });
+      }
+    }
   };
 
   return (
     <div className="container mt-5">
       <h2>Login</h2>
-      {message && <p>{message}</p>}
+      {message && <div className="alert alert-danger">{message}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username</label>

@@ -1,10 +1,8 @@
-// src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Import Link from react-router-dom
-import Home from './components/Home'; // Assuming you have a Home component
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (
