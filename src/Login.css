@@ -1,0 +1,16 @@
+/* src/Login.css */
+.login-form, .signup-form {
+    width: 100%; /* Make the form take up the full width of its container */
+    max-width: 600px; /* Adjust max-width to a larger size */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    float: left; /* Align to the left */
+    margin-left: 20px; /* Add some margin to the left */
+  }
+  
+  .container-left {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
