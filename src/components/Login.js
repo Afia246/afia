@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../Login.css'; // Adjust the path as per your file structure
+
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
