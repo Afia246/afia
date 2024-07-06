@@ -1,11 +1,12 @@
 // components/Home.js
 import React from 'react';
+import './Home.css'; // Import the CSS file
 
 const Home = () => {
   return (
-    <div>
-      <h2>Welcome to our Application!</h2>
-      <p>This content is visible to all users.</p>
+    <div className="homepage">
+      <h2>Welcome to warmth, wherever you wander.</h2>
+      <p>Enjoy the journey!</p>
     </div>
   );
 };
