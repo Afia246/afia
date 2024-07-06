@@ -1,11 +1,10 @@
-// src/components/Login.js
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../Login.css';
+import axios from 'axios';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,17 +14,22 @@ const Login = () => {
     e.preventDefault();
     axios.post('http://localhost:5000/api/login', formData)
       .then(response => {
-        console.log(response.data);
+        console.log('Login response:', response.data);
+        // Assuming your backend returns a token or session upon successful login
+        localStorage.setItem('token', response.data.token); // Store token in localStorage
+        window.location.href = '/home'; // Redirect to home page after successful login
       })
       .catch(error => {
-        console.error(error);
+        console.error('Login error:', error);
+        setMessage('Login failed. Please try again.');
       });
   };
 
   return (
-    <div className="container mt-5 container-left">
-      <form onSubmit={handleSubmit} className="login-form">
-        <h2>Login</h2>
+    <div className="container mt-5">
+      <h2>Login</h2>
+      {message && <p>{message}</p>}
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username</label>
           <input
@@ -50,11 +54,9 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Log In</button>
-        <div className="mt-3">
-          <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
-        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
       </form>
+      <p>Don't have an account? <Link to="/signup">Signup here</Link></p>
     </div>
   );
 };

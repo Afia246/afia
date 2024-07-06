@@ -1,10 +1,11 @@
-// src/components/Signup.js
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../Login.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,10 +15,14 @@ const Signup = () => {
     e.preventDefault();
     axios.post('http://localhost:5000/api/signup', formData)
       .then(response => {
-        console.log(response.data);
+        setMessage(response.data.message);
       })
       .catch(error => {
-        console.error(error);
+        if (error.response) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage('Signup failed');
+        }
       });
   };
 
@@ -25,6 +30,7 @@ const Signup = () => {
     <div className="container mt-5 container-left">
       <form onSubmit={handleSubmit} className="signup-form">
         <h2>Signup</h2>
+        {message && <p>{message}</p>}
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username</label>
           <input
@@ -62,9 +68,10 @@ const Signup = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary">Sign Up</button>
+        <p>Already have an account? <Link to="/login">Login</Link></p>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default Signup
