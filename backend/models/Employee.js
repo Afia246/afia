@@ -1,12 +1,23 @@
-// backend/models/Employee.js
+// models/Employee.js
 const mongoose = require('mongoose');
 
-const employeeSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+const EmployeeSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
 });
 
-const EmployeeModel = mongoose.model('employees', employeeSchema);
+const Employee = mongoose.model('Employee', EmployeeSchema);
 
-module.exports = EmployeeModel;
+module.exports = Employee;
