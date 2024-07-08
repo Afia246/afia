@@ -1,57 +1,38 @@
-/* App.css */
-
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+.App {
+  text-align: center;
 }
 
-.container {
-  padding-top: 20px;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-.navbar-coffee {
-  background-color: #6f4e37; /* Coffee color */
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
-.app-logo {
-  height: 100px; /* Increase the height */
-  width: auto; /* Maintain aspect ratio */
-  margin-right: 10px;
-}
-
-.nav-link {
-  color: #ffffff !important; /* White text */
-}
-
-.nav-link:hover {
-  color: #cccccc !important; /* Light gray on hover */
-}
-
-.homepage {
-  background-image: url('C:\Users\ASUS\afia\public\images\bg1.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh; /* Ensure it covers the full height */
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  color: #5a3d2b; /* Deep brown color for text */
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-h2, p {
-  margin: 0;
+.App-link {
+  color: #61dafb;
 }
 
-@media (max-width: 768px) {
-  .navbar-nav {
-    text-align: center;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-
-  .navbar-nav .nav-item {
-    margin-bottom: 10px;
+  to {
+    transform: rotate(360deg);
   }
 }
