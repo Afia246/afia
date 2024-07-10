@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function Login() {
+export default function Signup() {
     const [credentials, setCredentials] = useState({
+        name: "",
         email: "",
-        password: ""
-    }) 
-    let navigate=useNavigate()
+        password: "",
+        geolocation: "" // Ensure this matches the field name in your form
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:5000/api/loginuser", { // Changed endpoint to /loginuser
+            const response = await fetch("http://localhost:5000/api/createuser", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,8 +30,7 @@ export default function Login() {
                     alert("Enter valid credentials");
                 }
             } else {
-                alert("Login successful!");
-                navigate("/");
+                alert("Signup successful!");
             }
         } catch (error) {
             console.error("Error:", error);
@@ -46,9 +46,14 @@ export default function Login() {
     };
 
     return (
-        <div>
+        <>
             <div className='container'>
                 <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="name" className="form-label">Name</label>
+                        <input type="text" className="form-control" name="name" value={credentials.name} onChange={onChange} id="name" />
+                    </div>
+
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>
                         <input type="email" className="form-control" name='email' value={credentials.email} onChange={onChange} id="email" />
@@ -60,10 +65,15 @@ export default function Login() {
                         <input type="password" className="form-control" name='password' value={credentials.password} onChange={onChange} id="password" />
                     </div>
 
+                    <div className="mb-3">
+                        <label htmlFor="geolocation" className="form-label">Address</label>
+                        <input type="text" className="form-control" name='geolocation' value={credentials.geolocation} onChange={onChange} id="geolocation" />
+                    </div>
+
                     <button type="submit" className="m-3 btn btn-success">Submit</button>
-                    <Link to="/createuser" className='m-3 btn btn-danger'>I am a new user</Link>
+                    <Link to="/login" className='m-3 btn btn-danger'>Already a user</Link>
                 </form>
             </div>
-        </div>
+        </>
     );
 }
