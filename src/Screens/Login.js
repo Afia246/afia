@@ -30,7 +30,11 @@ export default function Login() {
                 }
             } else {
                 alert("Login successful!");
+
+                localStorage.setItem("authToken",json.authToken);
+               console.log(localStorage.getItem("authToken"))
                 navigate("/");
+
             }
         } catch (error) {
             console.error("Error:", error);

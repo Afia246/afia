@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
+  ],
+  "env": {
+    "MONGO_URI": "mongodb+srv://tree123:tree123@cluster0.r7pte9e.mongodb.net/Central_Perk",
+    "PORT": "5000"
+  }
+}
