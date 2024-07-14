@@ -6,19 +6,22 @@ export default function Signup() {
         name: "",
         email: "",
         password: "",
-        geolocation: "" // Ensure this matches the field name in your form
+        location: "" // Updated to use `location`
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:5000/api/createuser", {
+            const response = await fetch("http://localhost:5000/api/creatuser", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(credentials)
             });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             const json = await response.json();
             console.log(json);
 
@@ -66,8 +69,8 @@ export default function Signup() {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="geolocation" className="form-label">Address</label>
-                        <input type="text" className="form-control" name='geolocation' value={credentials.geolocation} onChange={onChange} id="geolocation" />
+                        <label htmlFor="location" className="form-label">Address</label>
+                        <input type="text" className="form-control" name='location' value={credentials.location} onChange={onChange} id="location" />
                     </div>
 
                     <button type="submit" className="m-3 btn btn-success">Submit</button>

@@ -1,20 +1,34 @@
 const mongoose = require('mongoose');
 
-const mongoURI = "mongodb+srv://tree123:tree123@cluster0.r7pte9e.mongodb.net/Central_Perk";
+const connectDB = async (mongoURI) => {
+    try {
+        await mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("Connected to MongoDB");
 
-const mongoDB = async () => {
-  try {
-    await mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log("Connected to MongoDB");
+        // Assuming 'food_items' is your collection name
+        const foodItemsCollection = mongoose.connection.collection("food_items");
 
-    const db = mongoose.connection.db;
-    const collection = db.collection("food_items");
+        // Fetch data from 'food_items' collection
+        const foodItemsData = await foodItemsCollection.find({}).toArray();
 
-    const data = await collection.find({}).toArray();
-    console.log(data);
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-  }
+        // Assuming 'foodCategory' is another collection name
+        const foodCategoryCollection = mongoose.connection.collection("foodCategory");
+
+        // Fetch data from 'foodCategory' collection
+        const foodCategoryData = await foodCategoryCollection.find({}).toArray();
+
+        // Assign fetched data to global variables
+        global.food_items = foodItemsData;
+        global.foodCategory = foodCategoryData;
+
+        console.log("Fetched food items from MongoDB:", global.food_items);
+        console.log("Fetched food categories from MongoDB:", global.foodCategory);
+    } catch (error) {
+        console.error("Error connecting to MongoDB:", error);
+    }
 };
 
-module.exports = mongoDB;
+module.exports = connectDB;
