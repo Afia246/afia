@@ -12,10 +12,12 @@ import{
   Route,
 
 } from "react-router-dom";
+import { Cartprovider } from './components/ContextReducer.js';
 
 
 function App() {
   return (
+    <Cartprovider>
     <Router>
       <div>  
          <Routes>
@@ -26,6 +28,7 @@ function App() {
           </div>
     
     </Router>
+    </Cartprovider>
   );
 }
 
