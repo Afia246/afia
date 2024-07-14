@@ -40,3 +40,23 @@
 .text-gold {
   color: gold !important;
 }
+
+.bg-gold {
+  background-color: gold;
+}
+
+.text-dark {
+  color: black;
+}
+
+.btn-logout {
+  background-color: gold;
+  color: black;
+  border: none;
+}
+
+.btn-cart {
+  background-color: gold;
+  color: black;
+  border: none;
+}

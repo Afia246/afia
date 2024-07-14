@@ -65,7 +65,7 @@ export default function Login() {
                     </div>
 
                     <button type="submit" className="m-3 btn btn-success">Submit</button>
-                    <Link to="/createuser" className='m-3 btn btn-danger'>I am a new user</Link>
+                    <Link to="/creatuser" className='m-3 btn btn-danger'>I am a new user</Link>
                 </form>
             </div>
         </div>

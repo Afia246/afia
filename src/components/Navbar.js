@@ -31,19 +31,21 @@ export default function Navbar() {
                 </li>
               )}
             </ul>
-            {!localStorage.getItem("authToken") ? (
-              <div className="d-flex">
-                <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/login">Login</Link>
-                <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/createuser">SignUp</Link>
-              </div>
-            ) : (
-              <div className="d-flex">
-                <div className="btn bg-gold text-dark mx-2">My Cart</div>
-                <div className="btn bg-gold text-dark mx-2" onClick={handleLogout}>
-                  Logout
-                </div>
-              </div>
-            )}
+            <div className="d-flex">
+              {!localStorage.getItem("authToken") ? (
+                <>
+                  <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/login">Login</Link>
+                  <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/creatuser">SignUp</Link>
+                </>
+              ) : (
+                <>
+                  <div className="btn btn-outline-light text-gold bg-dark mx-2">My Cart</div>
+                  <div className="btn btn-outline-light text-gold bg-dark mx-2" onClick={handleLogout}>
+                    Logout
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </nav>
