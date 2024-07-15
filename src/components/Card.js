@@ -1,49 +1,72 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCart, useDispatchCart } from './ContextReducer';
 
-export default function Card(props) {
-  let dispatch=useDispatchCart();
-  let data=useCart()
-  const priceRef=useRef();
-  let options = props.options;
-  let priceOptions = Object.keys(options);
-  const [qty,setQty]=useState(1)
-  const [size,setSize]=useState("")
-  const handleAddToCart=async ()=>{
-    await dispatch({type:'ADD',id:props.foodItem._id,name:props.foodItem.name,price:props.finalPrice,qty:qty,size:size})
-  console.log(data)
-  }
-  let finalPrice=qty* parseInt(options[size]);
-  useEffect(()=>{
-    setSize(priceRef.current.value)
-  },[])
+
+export default function Card({ foodItem, options, description }) {
+  const dispatch = useDispatchCart();
+  const data = useCart();
+  const priceRef = useRef();
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState("");
+
+  const priceOptions = Object.keys(options);
+
+  // Calculate finalPrice based on qty and selected size
+  const calculateFinalPrice = () => {
+    if (size && options[size]) {
+      return qty * parseInt(options[size]);
+    }
+    return 0; // Default to 0 or handle error case
+  };
+
+  // Handle addToCart action
+  const handleAddToCart = async () => {
+    const finalPrice = calculateFinalPrice();
+    await dispatch({
+      type: 'ADD',
+      id: foodItem._id,
+      name: foodItem.name,
+      price: finalPrice,
+      qty: qty,
+      size: size
+    });
+    console.log(data);
+  };
+
+  // Set initial size based on ref
+  useEffect(() => {
+    if (priceRef.current && priceOptions.length > 0) {
+      setSize(priceOptions[0]); // Initialize size with the first option
+    }
+  }, [priceOptions]); // Ensure useEffect runs when priceOptions changes
+
   return (
     <div>
       <div className="card mt-3" style={{ width: "18rem", maxHeight: "500px" }}>
-        <img src={props.foodItem.img} className="card-img-top" alt={props.foodName} style={{ height: "250px", objectFit: "fill" }} />
-        <div className="card-body">
-          <h5 className="card-title">{props.foodItem.name}</h5>
-          <div className='container w-100'>
-            <select className='m-2 h-100 w-100 bg-success' onChange={(e)=>setQty(e.target.value)}>
-              {
-                Array.from(Array(6), (e, i) => {
-                  return (
-                    <option key={i + 1} value={i + 1}>{i + 1}</option>
-                  )
-                })
-              }
-            </select>
-            <select className='m-2 h-100 w-100 bg-success rounded' ref={priceRef} onChange={(e)=>setSize(e.target.value)}>
-              {priceOptions.map((data) => (
-                <option key={data} value={data}>{data}</option>
-              ))}
-            </select>
+        <img src={foodItem.img} className="card-img-top" alt={foodItem.name} style={{ height: "250px", objectFit: "fill" }} />
+        <div className="card-body d-flex flex-column justify-content-between">
+          <div>
+            <h5 className="card-title">{foodItem.name}</h5>
+            <p className="card-text">{description}</p> {/* Display description here */}
+          </div>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className='container w-50'>
+              <select className='m-2 h-100 w-100 bg-success' value={qty} onChange={(e) => setQty(parseInt(e.target.value))}>
+                {Array.from(Array(6), (e, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+              <select className='m-2 h-100 w-100 bg-success rounded' ref={priceRef} value={size} onChange={(e) => setSize(e.target.value)}>
+                {priceOptions.map((data) => (
+                  <option key={data} value={data}>{data}</option>
+                ))}
+              </select>
+            </div>
             <div className='d-inline h-100 fs-5'>
-              BDT{finalPrice}/-
+              BDT {calculateFinalPrice()}/-
             </div>
           </div>
-          <button className={'btn btn-success juatify-center ms-2'}onClick={handleAddToCart}>Add to Cart</button>
-
+          <button className='btn btn-success mt-2 align-self-end' onClick={handleAddToCart}>Add to Cart</button>
         </div>
       </div>
     </div>
