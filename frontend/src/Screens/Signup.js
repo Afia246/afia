@@ -12,7 +12,7 @@ export default function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:5000/api/creatuser", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/creatuser`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

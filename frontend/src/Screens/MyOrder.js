@@ -8,7 +8,7 @@ export default function MyOrder() {
     const fetchMyOrder = async () => {
         try {
             // Replace with dynamic email fetching logic
-            const response = await fetch("http://localhost:5000/api/myOrder", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/myOrder`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

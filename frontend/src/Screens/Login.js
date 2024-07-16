@@ -11,7 +11,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:5000/api/loginuser", { // Changed endpoint to /loginuser
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loginuser`, { // Changed endpoint to /loginuser
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
