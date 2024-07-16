@@ -41,7 +41,7 @@ export default function Navbar() {
               {!localStorage.getItem("authToken") ? (
                 <>
                   <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/login">Login</Link>
-                  <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/createuser">SignUp</Link> {/* Corrected typo */}
+                  <Link className="btn btn-outline-light text-gold bg-dark mx-2" to="/creatuser">SignUp</Link> {/* Corrected typo */}
                 </>
               ) : (
                 <>
