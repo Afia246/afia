@@ -13,11 +13,7 @@ const mongoURI = "mongodb+srv://tree123:tree123@cluster0.r7pte9e.mongodb.net/Cen
 connectDB(mongoURI);
 
 // CORS middleware
-app.use(cors({
-    origin: ['http://localhost:3000', 'https://afia-last.vercel.app'], // Update with your allowed origins
-    methods: 'GET, POST, PUT, DELETE, OPTIONS',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
-}));
+app.use(cors());
 
 app.use(express.json());
 
