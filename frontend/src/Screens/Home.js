@@ -1,8 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
+
 export default function Home() {
   const [search, setSearch] = useState('');
   const [foodCat, setFoodCat] = useState([]);
@@ -17,8 +17,8 @@ export default function Home() {
         }
       });
       const data = await response.json();
-      setFoodItem(data[0]); // Assuming data[0] contains food items
-      setFoodCat(data[1]); // Assuming data[1] contains food categories
+      setFoodItem(data[0] || []); // Ensure data[0] is an array
+      setFoodCat(data[1] || []); // Ensure data[1] is an array
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -103,11 +103,10 @@ export default function Home() {
               }
             </div>
           ))
-          : ""
+          : <div>No categories found</div>
         }
       </div>
       <Footer />
     </div>
   );
 }
-
