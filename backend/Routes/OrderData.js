@@ -30,13 +30,26 @@ router.post('/orderData', async (req, res) => {
 
 router.post('/myOrder', async (req, res) => {
     try {
-        let myData = await Order.findOne({ email: req.body.email });
-        res.json({ orderData: myData });
+        const email = req.body.email;
+        console.log("Received email for query:", email);
+        
+        let myData = await Order.findOne({ email });
+        console.log("Query result:", myData);
+
+        if (!myData) {
+            console.log("No data found for email:", email);
+        }
+
+        res.json({ orderData: myData ? myData.order_data : null });
     } catch (error) {
         console.error("Error fetching orders:", error.message);
         res.status(500).send("Server Error: " + error.message);
     }
 });
+
+
+
+
 
 
 

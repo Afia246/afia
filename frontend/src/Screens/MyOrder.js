@@ -4,23 +4,28 @@ import Navbar from '../components/Navbar';
 
 export default function MyOrder() {
     const [orderData, setOrderData] = useState([]);
+    const [userEmail] = useState(localStorage.getItem('userEmail'));
 
     const fetchMyOrder = async () => {
+        console.log("Email to be used for fetching orders:", userEmail);
+
+        if (!userEmail) {
+            console.error("No email provided.");
+            return;
+        }
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/myOrder`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email: "user@example.com" }) // Replace with actual email
+                body: JSON.stringify({ email: userEmail })
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+    
             const data = await response.json();
-            setOrderData(data.orderData || []); // Assuming data.orderData contains the fetched order data
+            console.log("Fetched Order Data:", data);
+            setOrderData(data.orderData?.order_data || []); 
         } catch (error) {
             console.error("Error fetching orders:", error);
         }
@@ -28,7 +33,12 @@ export default function MyOrder() {
 
     useEffect(() => {
         fetchMyOrder();
-    }, []);
+    }, [userEmail]);
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return isNaN(date) ? null : date.toLocaleDateString();
+    };
 
     return (
         <div>
@@ -36,28 +46,29 @@ export default function MyOrder() {
             <div className="container">
                 <div className="row">
                     {orderData.length > 0 ? (
-                        orderData.slice(0).reverse().map((item, index) => (
-                            item.map((arrayData) => (
-                                <div className="col-12 col-md-6 col-lg-3" key={arrayData._id || index}>
-                                    <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
-                                        <img src={arrayData.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
-                                        <div className="card-body">
-                                            <h5 className="card-title">{arrayData.name}</h5>
-                                            <div className="container w-100 p-0" style={{ height: "38px" }}>
-                                                <span className="m-1">{arrayData.qty}</span>
-                                                <span className="m-1">{arrayData.size}</span>
-                                                <span className="m-1">{arrayData.Order_date}</span>
-                                                <div className="d-inline ms-2 h-100 w-20 fs-5">
-                                                    ৳{arrayData.price}/-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        orderData
+                            .slice(0)
+                            .reverse()
+                            .map((itemArray, index) => (
+                                <div className="col-12" key={index}>
+                                    <ul className="list-group mt-3">
+                                        {itemArray.map((arrayData, subIndex) => {
+                                            const formattedDate = formatDate(arrayData.Order_date);
+                                            return (
+                                                <li className="list-group-item" key={subIndex}>
+                                                    <h5>{arrayData.name}</h5>
+                                                    <p>Quantity: {arrayData.qty}</p>
+                                                    <p>Size: {arrayData.size}</p>
+                                                    {formattedDate && <p>Date: {formattedDate}</p>}
+                                                    <p>Price: ৳{arrayData.price}/-</p>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
                                 </div>
                             ))
-                        ))
                     ) : (
-                        <p>No orders found.</p>
+                        <p>No order is found.</p>
                     )}
                 </div>
             </div>

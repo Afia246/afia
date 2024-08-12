@@ -15,12 +15,17 @@ export default function Cart() {
   }
 
   // Calculate total price
-  const totalPrice = data.reduce((total, item) => total + (item.price * item.qty), 0);
+  const totalPrice = data.reduce((total, item) => total + (item.price), 0); // Summing up item prices
 
   // Handle checkout process
   const handleCheckout = async () => {
     try {
-      let userEmail = localStorage.getItem("userEmail"); // Get user email from localStorage
+      const userEmail = localStorage.getItem("userEmail");
+
+      if (!userEmail) {
+        alert("User email is not available. Please log in.");
+        return;
+      }
 
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orderData`, {
         method: 'POST',
@@ -34,17 +39,16 @@ export default function Cart() {
         })
       });
 
-      console.log("Order Response:", response);
-
-      if (response.status === 200) {
-        dispatch({ type: "DROP" }); // Clear the cart upon successful order
+      if (response.ok) {
+        dispatch({ type: "DROP" });
+        alert("Order placed successfully!");
       } else {
         console.error("Error placing order:", response.statusText);
-        // Handle error state or display error message
+        alert("Error placing order. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle fetch error or display error message
+      alert("Failed to place order. Please try again.");
     }
   };
 
@@ -68,7 +72,7 @@ export default function Cart() {
               <td>{item.name}</td>
               <td>{item.qty}</td>
               <td>{item.size}</td>
-              <td className='text-white'>{(item.price * item.qty).toFixed(2)}</td>
+              <td className='text-white'>{item.price.toFixed(2)}</td> {/* Display price of single item */}
               <td>
                 <button type='button' className='btn p-0'>
                   <img src={trash} alt='delete' onClick={() => dispatch({ type: 'REMOVE', index })} />
