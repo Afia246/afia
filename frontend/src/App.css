@@ -37,6 +37,7 @@
   }
 }
 
+/* Utility classes */
 .text-gold {
   color: gold !important;
 }
@@ -49,14 +50,28 @@
   color: black;
 }
 
-.btn-logout {
+/* Button styles */
+.btn-logout, .btn-cart {
   background-color: gold;
   color: black;
   border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.btn-cart {
-  background-color: gold;
-  color: black;
-  border: none;
+.btn-logout:hover, .btn-cart:hover {
+  background-color: darkgoldenrod;
+  cursor: pointer;
+}
+
+/* Optional media query for smaller screens */
+@media (max-width: 768px) {
+  .App-header {
+    font-size: calc(8px + 2vmin);
+  }
+  
+  .btn-logout, .btn-cart {
+    padding: 8px 16px;
+  }
 }
