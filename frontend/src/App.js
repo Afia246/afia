@@ -34,7 +34,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/createUser" element={<Signup />} />
+            <Route exact path="/creatuser" element={<Signup />} />
             <Route exact path="/myOrder" element={<MyOrder />} />
             <Route exact path="/cart" element={<Cart />} />
             <Route path="*" element={<h2>404 Page Not Found</h2>} />
