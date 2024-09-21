@@ -28,7 +28,7 @@ export default function Carousel() {
           </div>
 
           <div className="carousel-item active">
-            <img src="/images/bag1.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="Coffe"/>
+            <img src="/images/bg01.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="Coffe"/>
           </div>
           <div className="carousel-item">
             <img src="/images/coffe2.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="Pastry"/>
