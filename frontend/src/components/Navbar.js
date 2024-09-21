@@ -21,7 +21,6 @@ export default function Navbar() {
         <div className="container-fluid">
           <Link className="navbar-brand d-flex align-items-center fs-1 fst-italic" to="/">
             <img src="/images/cover.jpg" alt="Logo" style={{ height: '50px', marginRight: '10px' }} />
-            CENTRAL PERK
           </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
